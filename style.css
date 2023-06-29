@@ -1,0 +1,129 @@
+:root{
+    --mainaccentcolor: #0fb3ff;
+    --mainaccentcolordark: #005881;
+}
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #003d7a, #8edbff);
+}
+
+.hidden{
+    display: none;
+}
+
+button{
+    font-size: 1.75rem;
+    background-color: #f0f0f0;
+    color: #222;
+    cursor: pointer;
+    border: 1px solid var(--mainaccentcolordark);
+    border-radius: 0;
+    outline: none;
+}
+
+button:hover{
+    background-color: #ccc;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ccc;
+}
+
+.display{
+    position: relative;
+}
+
+input{
+    outline: 0;
+    border: none;
+    cursor: default;
+    color: inherit;
+    user-select: none;
+}
+
+#input{
+    width: 280px;
+    height: 80px;
+    background-color: #f0f0f0;
+    font-size: 2.25rem;
+    text-align: right;
+    padding: 20px 5px 0;
+    white-space: nowrap;
+    display: block;
+    overflow-x: auto;
+}
+
+#output{
+    width: 280px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border-top: 1px solid var(--mainaccentcolor);
+    font-size: 1.25rem;
+    padding: 5px 5px 0;
+    text-align: right;
+    display: block;
+    user-select: none;
+}
+
+.button-wrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows:  repeat(5, 70px);
+}
+
+#_equal{
+    grid-row: span 2;
+}
+
+.blue{
+    color: var(--mainaccentcolordark);
+}
+
+.operation{
+    position: relative;
+}
+
+.error-message{
+    position: absolute;
+    top: -35px;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: 0.9rem;
+    background-color: hsl(0, 100%, 88%, 0.8);
+    color: #222;
+    cursor: pointer;
+    width: 120px;
+    white-space: normal;
+    text-align: center;
+    z-index: 99;
+    padding: 5px;
+}
+
+.error-message::after{
+    position: absolute;
+    content: '';
+    display: inline-block;
+    bottom: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 0;
+    height: 0;
+    border-top: 12px solid hsl(0, 100%, 88%, 0.8);;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    z-index: 100;
+}
