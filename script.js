@@ -30,18 +30,24 @@ buttons.forEach(button =>{
                 input.value = input.value.slice(0, -1);
                 inputHidden.value = inputHidden.value.slice(0, -4);
                 output.value = eval(inputHidden.value);
+            } else if(input.value.slice(-2) === '--'){
+                input.value = input.value.slice(0, -1);
+                inputHidden.value = inputHidden.value.slice(0, -1);
+                inputHidden.value += '-';
+            } else if(input.value.slice(-2) === '++'){
+                input.value = input.value.slice(0, -1);
             }else {
                 input.value = input.value.slice(0, -1);
                 inputHidden.value = inputHidden.value.slice(0, -1);
+            }
 
-                if (input.value.slice(-1) === multiplySign
+            if (input.value.slice(-1) === multiplySign
                 || input.value.slice(-1) === divideSign
                 || input.value.slice(-1) === '+'
                 || input.value.slice(-1) === '-') {
                     // do nothing
-                } else {
-                    output.value = eval(inputHidden.value);
-                }
+            } else {
+                output.value = eval(inputHidden.value);
             }
         } else if (button.id === '_clear'){
             input.value = 0;
@@ -50,9 +56,8 @@ buttons.forEach(button =>{
 
         } else if (button.id === '_decimal'){
             if(input.value.slice(-2).includes('.')
-                || input.value.slice(-1).includes('%')){
-                errorMessage(decimal);
-            } else if(input.value.includes('.') && input.value.slice(input.value.lastIndexOf('.') + 1) * 1 !== NaN){
+                || input.value.slice(-1).includes('%')
+                || input.value.includes('.') && input.value.slice(input.value.lastIndexOf('.') + 1) * 1){
                 errorMessage(decimal);
             } else {
                 input.value += button.textContent;
@@ -75,25 +80,25 @@ buttons.forEach(button =>{
                 output.value = eval(inputHidden.value);
             }
         } else if (button.id === '_multiply') {   
-            if (input.value.slice(-1) === button.textContent
+            if (input.value.slice(-1) === multiplySign
 // we cannot have 5+*2 or 5-*2 or 5/*2
             || input.value.slice(-1) === '+'
             || input.value.slice(-1) === '-'
             || input.value.slice(-1) === divideSign) {
                 errorMessage(multiply);
             } else {
-                input.value += button.textContent;
+                input.value += multiplySign;
                 inputHidden.value += '*';
             }
         } else if (button.id === '_divide') {   
-            if (input.value.slice(-1) === button.textContent
+            if (input.value.slice(-1) === divideSign
 // we cannot have 5+/2 or 5-/2 or 5*/2
             || input.value.slice(-1) === '+'
             || input.value.slice(-1) === '-'
             || input.value.slice(-1) === multiplySign) {
                 errorMessage(divide);
             } else {
-                input.value += button.textContent;
+                input.value += divideSign;
                 inputHidden.value += '/';
             }
         } else if (button.id === '_plus') {   
@@ -117,6 +122,7 @@ buttons.forEach(button =>{
                 errorMessage(minus);
             } else if(input.value.slice(-1) === '-'){
                 input.value += button.textContent;
+                inputHidden.value = inputHidden.value.slice(0, -1);
                 inputHidden.value += '+';
             } else if(input.value == 0){
                 input.value = button.textContent;
@@ -147,22 +153,25 @@ buttons.forEach(button =>{
                 } else {
                     input.value = output.value;
                     inputHidden.value = output.value;
-                }
+            }
         }
     })
 })
 
 function errorMessage(caller){
-    if (caller.children.length === 0) {
+    if (decimal.children.length === 0
+        && percent.children.length === 0
+        && plus.children.length === 0
+        && minus.children.length === 0
+        && multiply.children.length === 0
+        && divide.children.length === 0) {
         errorP = document.createElement('p');
         errorP.textContent = 'Please perform a valid calculation.';
         errorP.classList.add('error-message');
         caller.appendChild(errorP);
 
         setTimeout(() => {
-            if (caller.children.length !== 0) {
                 caller.removeChild(errorP);
-            }
         }, 1000);
     } else {
 
